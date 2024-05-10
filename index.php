@@ -1,62 +1,57 @@
 <?php
 session_start();
-include('includes/config.php');
-if(isset($_POST['signin']))
-{
-	$username=$_POST['username'];
-	$password=md5($_POST['password']);
+include 'includes/config.php';
+if (isset($_POST['signin'])) {
+    $username = $_POST['username'];
+    $password = md5($_POST['password']);
 
-	$sql ="SELECT * FROM tblemployees where EmailId ='$username' AND Password ='$password'";
-	$query= mysqli_query($conn, $sql);
-	$count = mysqli_num_rows($query);
-	if($count > 0)
-	{
-		while ($row = mysqli_fetch_assoc($query)) {
-		    if ($row['role'] == 'Admin') {
-		    	$_SESSION['alogin']=$row['emp_id'];
-		    	$_SESSION['arole']=$row['role'];
-		    	$_SESSION['adepart']=$row['Department'];
-				
-			    //login active status
-                $emp_id =  $_SESSION['alogin'];
+    $sql = "SELECT * FROM tblemployees where EmailId ='$username' AND Password ='$password'";
+    $query = mysqli_query($conn, $sql);
+    $count = mysqli_num_rows($query);
+    if ($count > 0) {
+        while ($row = mysqli_fetch_assoc($query)) {
+            if ($row['role'] == 'Admin') {
+                $_SESSION['alogin'] = $row['emp_id'];
+                $_SESSION['arole'] = $row['role'];
+                $_SESSION['adepart'] = $row['Department'];
+
+                //login active status
+                $emp_id = $_SESSION['alogin'];
                 $result = mysqli_query($conn, "UPDATE tblemployees SET status='Online' WHERE emp_id='$emp_id'");
 
-			 	echo "<script type='text/javascript'> document.location = 'admin/admin_dashboard.php'; </script>";
-		    }
-		    elseif ($row['role'] == 'Staff') {
-		    	$_SESSION['alogin']=$row['emp_id'];
-		    	$_SESSION['arole']=$row['role'];
-		    	$_SESSION['adepart']=$row['Department'];
-				
-				//login active status
-                $emp_id =  $_SESSION['alogin'];
+                echo "<script type='text/javascript'> document.location = 'admin/admin_dashboard.php'; </script>";
+            } elseif ($row['role'] == 'Staff') {
+                $_SESSION['alogin'] = $row['emp_id'];
+                $_SESSION['arole'] = $row['role'];
+                $_SESSION['adepart'] = $row['Department'];
+
+                //login active status
+                $emp_id = $_SESSION['alogin'];
                 $result = mysqli_query($conn, "UPDATE tblemployees SET status='Online' WHERE emp_id='$emp_id'");
 
-			 	echo "<script type='text/javascript'> document.location = 'staff/index.php'; </script>";
-		    }
-		    else {
-		    	$_SESSION['alogin']=$row['emp_id'];
-		    	$_SESSION['arole']=$row['role'];
-		    	$_SESSION['adepart']=$row['Department'];
-				
-			    //login active status
-                $emp_id =  $_SESSION['alogin'];
+                echo "<script type='text/javascript'> document.location = 'staff/index.php'; </script>";
+            } else {
+                $_SESSION['alogin'] = $row['emp_id'];
+                $_SESSION['arole'] = $row['role'];
+                $_SESSION['adepart'] = $row['Department'];
+
+                //login active status
+                $emp_id = $_SESSION['alogin'];
                 $result = mysqli_query($conn, "UPDATE tblemployees SET status='Online' WHERE emp_id='$emp_id'");
 
-			 	echo "<script type='text/javascript'> document.location = 'heads/index.php'; </script>";
-		    }
+                echo "<script type='text/javascript'> document.location = 'heads/index.php'; </script>";
+            }
 
-		}
+        }
 
-	} 
-	else{
-	  echo "<script>alert('Invalid Details');</script>";
+    } else {
+        echo "<script>alert('Invalid Details');</script>";
 
-	}
+    }
 
 }
 // $_SESSION['alogin']=$_POST['username'];
-// 	echo "<script type='text/javascript'> document.location = 'changepassword.php'; </script>";
+//     echo "<script type='text/javascript'> document.location = 'changepassword.php'; </script>";
 ?>
 
 <!DOCTYPE html>
@@ -110,10 +105,10 @@ if(isset($_POST['signin']))
 				<div class="col-md-6 col-lg-5">
 					<div class="login-box bg-white box-shadow border-radius-10">
 						<div class="login-title">
-							<h2 class="text-center text-primary">Welcome To LeavePortal</h2>
+							<h2 class="text-center text-primary">SIGIN TO LMPDC</h2>
 						</div>
 						<form name="signin" method="post">
-						
+
 							<div class="input-group custom">
 								<input type="text" class="form-control form-control-lg" placeholder="Email ID" name="username" id="username">
 								<div class="input-group-append custom">
@@ -127,7 +122,7 @@ if(isset($_POST['signin']))
 								</div>
 							</div>
 							<div class="row pb-30">
-								
+
 								<div class="col-6">
 									<div class="forgot-password"><a href="forgot-password.html">Forgot Password</a></div>
 								</div>
